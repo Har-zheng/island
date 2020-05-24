@@ -7,8 +7,12 @@ const parser = new Parser()
 app.use(parser)
 
 const InitManager = require('./core/init')
+const catchError = require('./middlewares/exception')
 
+app.use(catchError)
 InitManager.initCore(app)
+
+// 获取当前文件 绝对路径
 process.cwd()
 console.log(process.cwd())
 app.listen(3000)
