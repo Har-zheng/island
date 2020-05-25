@@ -17,16 +17,16 @@ router.post('/v1/:id/classic/latest', async (ctx, next) => {
     path
   } = ctx
 
-  const v = new PositiveIntegerValidator()
-  v.validate(ctx)
+  const v = new PositiveIntegerValidator().validate(ctx)
+  const id = v.get('path.id',parsed = false)
+
+  ctx.body = 'success'
   
-  if (true) {
-    const error = new ParameterException()
-    // error.requestUrl = `${method} ${path}`
-    throw error
-  }
-  ctx.body = {
-    key: 'classic'
-  }
+  // if (true) {
+  //   // const error = new ParameterException()
+  //   // error.requestUrl = `${method} ${path}`
+  //   throw error
+  // }
+
 })
 module.exports = router
