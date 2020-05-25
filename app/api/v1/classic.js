@@ -1,15 +1,28 @@
 const Router = require('koa-router')
 const router = Router()
-router.post('/v1/:id/classic/latest', async (ctx,next) => {
-  const { header, body, query } = ctx.request
-  const path = ctx.params
-  const {method, patch } = ctx
+const {
+  HttpException,
+  ParameterException
+} = require('../../../core/http-exception')
+const { PositiveIntegerValidator } = require('../../lib/validators/validators')
+router.post('/v1/:id/classic/latest', async (ctx, next) => {
+  const {
+    header,
+    body,
+    query
+  } = ctx.request
+  // const path = ctx.params
+  const {
+    method,
+    path
+  } = ctx
 
-  if(true){
-    const error = new Error('5000 错误!!')
-    error.errorCode = 10001
-    error.status = 400
-    error.requestUrl = `${method} ${patch}`
+  const v = new PositiveIntegerValidator()
+  v.validate(ctx)
+  
+  if (true) {
+    const error = new ParameterException()
+    // error.requestUrl = `${method} ${path}`
     throw error
   }
   ctx.body = {

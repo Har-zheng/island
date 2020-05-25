@@ -13,6 +13,6 @@ app.use(catchError)
 InitManager.initCore(app)
 
 // 获取当前文件 绝对路径
-process.cwd()
-console.log(process.cwd())
+// process.cwd()
+// console.log(process.cwd())
 app.listen(3000)

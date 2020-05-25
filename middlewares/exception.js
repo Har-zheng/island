@@ -1,14 +1,34 @@
+const {
+  HttpException
+} = require('../core/http-exception')
 const catchError = async (ctx, next) => {
   try {
     await next()
   } catch (error) {
-    if(error.errorCode){
+    const {
+      msg,
+      code
+    } = error
+    const {
+      method,
+      path
+    } = ctx
+    if (error instanceof HttpException) {
+      
       ctx.body = {
-        msg: error.message,
+        msg: msg,
         error_code: error.errorCode,
-        request: error.requestUrl
+        request: `${method}${path}`
       }
-      ctx.status = error.status
+      ctx.status = error.code
+    }else{
+      // 处理未知异常
+      ctx.body = { 
+        msg:  'we made a mistake ',
+        error_code: 999,
+        request: `${method}${path}`
+      }
+      ctx.status = 500
     }
   }
 }
