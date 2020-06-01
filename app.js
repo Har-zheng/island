@@ -8,7 +8,7 @@ app.use(parser)
 
 const InitManager = require('./core/init')
 const catchError = require('./middlewares/exception')
-
+require('./app/models/user')
 app.use(catchError)
 InitManager.initCore(app)
 
