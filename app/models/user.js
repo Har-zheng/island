@@ -14,5 +14,11 @@ User.init({
   openid: {
     type: Sequelize.STRING(64),
     unique: true
-  }
-},{sequelize})
+  },
+  test: Sequelize.STRING
+},{
+  sequelize,
+  tableName: 'user'
+})
+
+// 数据迁移  sql 更新 风险
