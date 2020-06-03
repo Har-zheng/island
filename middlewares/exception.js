@@ -22,7 +22,6 @@ const catchError = async (ctx, next) => {
       path
     } = ctx
     if (isHttpException) {
-      
       ctx.body = {
         msg: msg,
         error_code: error.errorCode,
