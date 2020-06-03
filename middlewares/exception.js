@@ -7,7 +7,10 @@ const catchError = async (ctx, next) => {
   } catch (error) {
     // 开发环境
     // 生成环境
-    if(global.config.environment === 'dev'){
+    // 开发环境 不是 http-exception
+    const  isHttpException = error instanceof HttpException
+    const isDev = global.config.environment === 'dev'
+    if(isDev && !isHttpException){
       throw error
     }
     const {
@@ -18,7 +21,7 @@ const catchError = async (ctx, next) => {
       method,
       path
     } = ctx
-    if (error instanceof HttpException) {
+    if (isHttpException) {
       
       ctx.body = {
         msg: msg,
