@@ -1,6 +1,7 @@
 const Router = require('koa-router')
 const { RegisteerValidator } = require('../../lib/validators/validators')
 const { User } = require('../../models/user')
+const {success} = require('../../lib/helper')
 const router = new Router({
   prefix: '/v1/user'
 })
@@ -19,6 +20,7 @@ router.post('/register', async (ctx) => {
     nickname: v.get('body.nickname')
   }
   const r = await User.create(user)
+  success()
   // 保存到数据库
   // sql model
 })
