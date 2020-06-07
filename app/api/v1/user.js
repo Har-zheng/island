@@ -12,8 +12,6 @@ router.post('/register', async (ctx) => {
   // email 
   // 中间件
   const v = await new RegisteerValidator().validate(ctx)
-
-  
   const user = {
     email: v.get('body.email'),
     password: v.get('body.password2'),
