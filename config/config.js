@@ -1,11 +1,15 @@
-module.exports = { 
+module.exports = {
   // prod
-  environment : "dev",
+  environment: "dev",
   dataBase: {
     dbName: 'island',
     host: 'localhost',
     port: 3306,
     user: 'root',
-    password:'12345678'
+    password: '12345678'
+  },
+  security: {
+    secretKey: "abcdefg",
+    expiresIn: 60 * 60
   }
 }
