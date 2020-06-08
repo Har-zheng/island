@@ -1,5 +1,5 @@
 const Router = require('koa-router')
-const { RegisteerValidator } = require('../../lib/validators/validators')
+const { RegisteerValidator } = require('../../validators/validators')
 const { User } = require('../../models/user')
 const {success} = require('../../lib/helper')
 const router = new Router({

@@ -4,7 +4,7 @@ const {
   HttpException,
   ParameterException
 } = require('../../../core/http-exception')
-const { PositiveIntegerValidator } = require('../../lib/validators/validators')
+const { PositiveIntegerValidator } = require('../../validators/validators')
 router.post('/v1/:id/classic/latest', async (ctx, next) => {
   const {
     header,

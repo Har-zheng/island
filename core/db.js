@@ -27,7 +27,8 @@ const sequelize = new Sequelize(dbName, user, password, {
   }
 })
 sequelize.sync({
-  force: true
+  // 删除数据 重新生成数据库
+  force: false
 })
 module.exports = {
   sequelize
