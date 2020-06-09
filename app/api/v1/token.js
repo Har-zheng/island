@@ -12,6 +12,7 @@ const {
   ParameterException
 } = require('../../../core/http-exception')
 const { generateToken } = require('../../../core/util')
+const { Auth } = require('../../../middlewares/auth')
 const router = new Router({
   prefix: '/v1/token'
 })
@@ -28,7 +29,8 @@ router.post('/', async ctx => {
       break;
     case LoginType.USER_EMAIL:
       // secret
-      token =  await emaiLogin(v.get('body.account'), v.get('body.secret'))
+      token =  await emaiLogin(v.get('body.account'), v.get('body.secret'), Auth.USER)
+      
       break;
       // case LoginType.USER_MOBILE:
       //   break;
@@ -43,8 +45,8 @@ router.post('/', async ctx => {
   }
 })
 
-const emaiLogin = async (account, secret) => {
+const emaiLogin = async (account, secret, role) => {
   const user = await User.verifyEmailPassword(account, secret)
-  return  generateToken(user.id, 2)
+  return  generateToken(user.id, role)
 }
 module.exports = router

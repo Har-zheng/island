@@ -13,6 +13,12 @@ const LoginType = {
   ADMIN_EMAIL: 200,
   isThisType
 }
+const roles = {
+  USER: 8,
+  ADMIN: 16,
+  SUPER_ADMIN: 32
+}
 module.exports = {
-  LoginType
+  LoginType,
+  roles
 }
