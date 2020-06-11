@@ -11,8 +11,15 @@ const {
 const {
   ParameterException
 } = require('../../../core/http-exception')
-const { generateToken } = require('../../../core/util')
-const { Auth } = require('../../../middlewares/auth')
+const {
+  generateToken
+} = require('../../../core/util')
+const {
+  Auth
+} = require('../../../middlewares/auth')
+const {
+  WXManger
+} = require('../../services/wx')
 const router = new Router({
   prefix: '/v1/token'
 })
@@ -26,11 +33,12 @@ router.post('/', async ctx => {
   let token;
   switch (v.get('body.type')) {
     case LoginType.USER_MINI_PROGRAM:
+      token = await WXManger.codeToToken(v.get('body.account'))
       break;
     case LoginType.USER_EMAIL:
       // secret
-      token =  await emaiLogin(v.get('body.account'), v.get('body.secret'), Auth.USER)
-      
+      token = await emaiLogin(v.get('body.account'), v.get('body.secret'), Auth.USER)
+
       break;
       // case LoginType.USER_MOBILE:
       //   break;
@@ -47,6 +55,6 @@ router.post('/', async ctx => {
 
 const emaiLogin = async (account, secret, role) => {
   const user = await User.verifyEmailPassword(account, secret)
-  return  generateToken(user.id, role)
+  return generateToken(user.id, role)
 }
 module.exports = router
