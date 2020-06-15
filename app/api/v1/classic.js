@@ -9,7 +9,7 @@ const { Flow } = require('../../models/flow')
 const { roles } = require('../../lib/enum')
 router.get('/latest', new Auth(roles.USER).m, async (ctx, next) => {
   console.log(roles)
-  const flow = Flow.findOne({
+  const flow =await Flow.findOne({
     order:[
       ['index', 'DESC']
     ]
