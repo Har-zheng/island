@@ -14,6 +14,8 @@ router.get('/latest', new Auth(roles.USER).m, async (ctx, next) => {
       ['index', 'DESC']
     ]
   })
+   
   ctx.body = flow
 })
+
 module.exports = router
