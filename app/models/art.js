@@ -18,6 +18,7 @@ class Art {
       default:
         break;
     }
+    return art
   }
 }
 module.exports = {
