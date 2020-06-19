@@ -18,7 +18,16 @@ const roles = {
   ADMIN: 16,
   SUPER_ADMIN: 32
 }
+const ArtType = {
+  MOVIE:100,
+  MUSIC:200,
+  SENTENCE:300,
+  BOOK:400,
+  isThisType
+}
+
 module.exports = {
   LoginType,
-  roles
+  roles,
+  ArtType
 }

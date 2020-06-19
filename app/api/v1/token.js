@@ -56,7 +56,7 @@ router.post('/verify', async ctx => {
   const v = await new NotEmptyValidator().validate(ctx)
   const result = await Auth.verifyToken(v.get('body.token'))
   ctx.body = {
-    isValid: result
+    is_valid: result
   }
 })
 
