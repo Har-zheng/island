@@ -106,7 +106,7 @@ function checkArtType(vals) {
     throw new Error('type参数不合法')
   }
 }
-class LikeValidator extends ParameterException{
+class LikeValidator extends PositiveIntegerValidator{
   constructor(){
     super()
     this.validateType = checkArtType
