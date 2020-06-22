@@ -9,6 +9,7 @@
     "koa-router": "^8.0.8",
     "koa-static": "^5.0.0",
     "lodash": "^4.17.15",
+    "module-alias": "^2.2.2",
     "mysql2": "^2.1.0",
     "npm-check": "^5.9.2",
     "require-directory": "^2.1.1",
@@ -18,5 +19,14 @@
   "name": "book",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "_moduleAliases": {
+    "@root": ".",
+    "@model": "app/models",
+    "@core": "core",
+    "@middlewares": "middlewares",
+    "@validator": "app/validators/validator.js",
+    "@services": "app/services",
+    "@lib": "app/lib"
+  }
 }
