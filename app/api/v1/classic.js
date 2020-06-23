@@ -15,7 +15,8 @@ const {
   Art
 } = require('@model/art')
 const {
-  PositiveIntegerValidator
+  PositiveIntegerValidator,
+  ClassicValidator
 } = require('@validator')
 const {
   Favor
@@ -77,13 +78,31 @@ router.get('/:index/next', new Auth(roles.USER).m, async (ctx,next) => {
   if(!flow){
     throw new NotFound()
   }
-  const { art_id, type,index } = flow
+  const { art_id, type } = flow
   const  art = await Art.getData(art_id, type)
   const likeLatest = await Favor.userLikeIt(art_id, type, ctx.auth.uid)
-  art.setDataValue('index', index)
+  art.setDataValue('index', index  + 1)
   art.setDataValue('likeStatus', likeLatest)
   ctx.body = art
-
+})
+// 获取点赞信息
+router.get('/:id/:type/favor', new Auth().m, async ctx => {
+  const v = await new ClassicValidator().validate(ctx)
+  const id = parseInt(v.get('path.id'))
+  const type =  parseInt(v.get('path.type')) 
+  const art = await Art.getData(id,type )
+  if(!art){
+    throw new NotFound()
+  }
+  const like = await Favor.userLikeIt(id, type, ctx.auth.uid)
+  ctx.body = {
+    favNums: art.fav_nums,
+    likeStatus: like
+  }
+})
+// 查询点赞过的期刊
+router.get('/favor', new Auth().m, async ctx => {
+  ctx.body = await Favor.getMyClassicFavors(ctx.auth.uid )
 })
 
 module.exports = router

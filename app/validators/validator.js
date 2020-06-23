@@ -106,16 +106,25 @@ function checkArtType(vals) {
     throw new Error('type参数不合法')
   }
 }
+
+class CheckedType{
+  
+}
+
 class LikeValidator extends PositiveIntegerValidator{
   constructor(){
     super()
     this.validateType = checkArtType
   }
 }
+class ClassicValidator extends LikeValidator{
+
+}
 module.exports = {
   PositiveIntegerValidator,
   RegisteerValidator,
   TokenValidator,
   NotEmptyValidator,
-  LikeValidator
+  LikeValidator,
+  ClassicValidator
 }
