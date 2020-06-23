@@ -100,6 +100,22 @@ router.get('/:id/:type/favor', new Auth().m, async ctx => {
     likeStatus: like
   }
 })
+// 获取详细信息  进行 实例的封装
+router.get('/:id/:type/favor', new Auth().m, async ctx => {
+  const v = await new ClassicValidator().validate(ctx)
+  const id = parseInt(v.get('path.id'))
+  const type =  parseInt(v.get('path.type')) 
+  const art = await Art.getData(id,type )
+  if(!art){
+    throw new NotFound()
+  }
+  const like = await Favor.userLikeIt(id, type, ctx.auth.uid)
+  ctx.body = {
+    ...art,
+    likeStatus: like
+  }
+})
+
 // 查询点赞过的期刊
 router.get('/favor', new Auth().m, async ctx => {
   ctx.body = await Favor.getMyClassicFavors(ctx.auth.uid )
