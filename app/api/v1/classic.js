@@ -57,7 +57,10 @@ router.get('/:index/previous', new Auth(roles.USER).m, async (ctx, next) => {
   if (!flow) {
     throw new NotFound()
   }
-  const { art_id, type  } = flow
+  const {
+    art_id,
+    type
+  } = flow
   const art = await Art.getData(art_id, type)
   const likeLatest = await Favor.userLikeIt(art_id, type, ctx.auth.uid)
   art.setDataValue('index', index - 1)
@@ -65,23 +68,26 @@ router.get('/:index/previous', new Auth(roles.USER).m, async (ctx, next) => {
   ctx.body = art
 })
 // 获取下一期
-router.get('/:index/next', new Auth(roles.USER).m, async (ctx,next) => {
+router.get('/:index/next', new Auth(roles.USER).m, async ctx => {
   const v = await new PositiveIntegerValidator().validate(ctx, {
     id: 'index'
   })
-  const  index  = v.get('path.index')
+  const index = v.get('path.index')
   const flow = await Flow.findOne({
     where: {
-      index: index  + 1
+      index: index + 1
     }
   })
-  if(!flow){
+  if (!flow) {
     throw new NotFound()
   }
-  const { art_id, type } = flow
-  const  art = await Art.getData(art_id, type)
+  const {
+    art_id,
+    type
+  } = flow
+  const art = await Art.getData(art_id, type)
   const likeLatest = await Favor.userLikeIt(art_id, type, ctx.auth.uid)
-  art.setDataValue('index', index  + 1)
+  art.setDataValue('index', index + 1)
   art.setDataValue('likeStatus', likeLatest)
   ctx.body = art
 })
@@ -89,36 +95,26 @@ router.get('/:index/next', new Auth(roles.USER).m, async (ctx,next) => {
 router.get('/:id/:type/favor', new Auth().m, async ctx => {
   const v = await new ClassicValidator().validate(ctx)
   const id = parseInt(v.get('path.id'))
-  const type =  parseInt(v.get('path.type')) 
-  const art = await Art.getData(id,type )
-  if(!art){
-    throw new NotFound()
-  }
-  const like = await Favor.userLikeIt(id, type, ctx.auth.uid)
+  const type = parseInt(v.get('path.type'))
+  const artDetail = await new Art(id, type).getDetail(ctx.auth.uid)
   ctx.body = {
-    favNums: art.fav_nums,
-    likeStatus: like
+    favNums: artDetail.art.fav_nums,
+    likeStatus: artDetail.likeStatus
   }
 })
-// 获取详细信息  进行 实例的封装
-router.get('/:id/:type/favor', new Auth().m, async ctx => {
+// 获取详细信息  进行实例的封装 
+router.get('/:id/:type', new Auth().m, async ctx => {
   const v = await new ClassicValidator().validate(ctx)
   const id = parseInt(v.get('path.id'))
-  const type =  parseInt(v.get('path.type')) 
-  const art = await Art.getData(id,type )
-  if(!art){
-    throw new NotFound()
-  }
-  const like = await Favor.userLikeIt(id, type, ctx.auth.uid)
-  ctx.body = {
-    ...art,
-    likeStatus: like
-  }
-})
+  const type = parseInt(v.get('path.type'))
+  const artDetail = await new Art(id, type).getDetail(ctx.auth.uid)
+  artDetail.art.setDataValue('likeStatus', artDetail.likeStatus)
+  ctx.body = artDetail.art
 
+})
 // 查询点赞过的期刊
 router.get('/favor', new Auth().m, async ctx => {
-  ctx.body = await Favor.getMyClassicFavors(ctx.auth.uid )
+  ctx.body = await Favor.getMyClassicFavors(ctx.auth.uid)
 })
 
 module.exports = router

@@ -2,7 +2,27 @@ const {  Movie,
   Sentence,
   Music  } = require('../models/classic');
 const { Op } = require('sequelize');
+const { NotFound } = require('@core/http-exception.js')
 class Art {
+  constructor(art_id , type){
+    this.art_id = art_id
+    this.type = type
+  }
+
+   async getDetail(uid){
+    // 避免导入逻辑的错误  放在执行阶段
+    const { Favor  } = require('./favor')
+    const art = await Art.getData(this.art_id,this.type )
+    if(!art){
+      throw new NotFound()
+    }
+    const like = await Favor.userLikeIt(this.art_id,this.type , uid)
+    return {
+      art: art,
+      likeStatus:like
+    }
+  }
+
   static async getData(artId, type){
     let art = null;
     const findr = {
