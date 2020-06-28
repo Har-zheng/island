@@ -1,10 +1,14 @@
 const Router = require('koa-router')
 const router = Router({
-  prefix: '/v1'
+  prefix: '/v1/book'
 })
-router.get('/book/hot_list', async (ctx,next) => {
+const {
+  HotBook
+} = require('@model/hot-book.js')
+router.get('/hot_list', async (ctx, next) => {
+  const favors = await HotBook.getAll()
   ctx.body = {
-    key: '书'
+    key: favors
   }
 })
-module.exports =  router
+module.exports = router
