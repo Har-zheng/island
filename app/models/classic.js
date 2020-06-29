@@ -1,11 +1,19 @@
-const { Sequelize, Model } = require('sequelize')
-const { sequelize } = require('../../core/db')
+const {
+  Sequelize,
+  Model
+} = require('sequelize')
+const {
+  sequelize
+} = require('../../core/db')
 
 const classicFields = {
   image: Sequelize.STRING,
   content: Sequelize.STRING,
   pubdate: Sequelize.DATEONLY,
-  fav_nums: Sequelize.INTEGER,
+  fav_nums: {
+    type: Sequelize.INTEGER,
+    default: 0
+  },
   title: Sequelize.STRING,
   type: Sequelize.TINYINT
 }
@@ -29,7 +37,9 @@ Sentence.init(classicFields, {
 class Music extends Model {
 
 }
-const music = Object.assign({ url: Sequelize.INTEGER }, classicFields)
+const music = Object.assign({
+  url: Sequelize.INTEGER
+}, classicFields)
 Music.init(music, {
   sequelize,
   tableName: "music"
