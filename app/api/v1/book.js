@@ -1,4 +1,5 @@
 const Router = require('koa-router')
+const { Book } = require('@model/book.js')
 const router = Router({
   prefix: '/v1/book'
 })
@@ -10,5 +11,9 @@ router.get('/hot_list', async (ctx, next) => {
   ctx.body = {
     key: favors
   }
+})
+router.get('/:id/book', async (ctx, next) => {
+  const detail = await Book.detail()
+  ctx.body = detail
 })
 module.exports = router
