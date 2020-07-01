@@ -75,12 +75,12 @@ class Art {
     }
     switch (type) {
       case 100:
-        arts = await Movie.findOne(findr)
+        arts = await Movie.findAll(findr)
         break;
       case 200:
-        arts = await Music.findOne(findr)
+        arts = await Music.findAll(findr)
       case 300:
-        arts = await Sentence.findOne(findr)
+        arts = await Sentence.findAll(findr)
       default:
         break;
     }

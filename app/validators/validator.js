@@ -120,6 +120,16 @@ class LikeValidator extends PositiveIntegerValidator{
 class ClassicValidator extends LikeValidator{
 
 }
+
+class SearchValidator extends LinValidator {
+  constructor(){
+    super()
+    this.q = [
+      
+    ]
+  }
+}
+
 module.exports = {
   PositiveIntegerValidator,
   RegisteerValidator,
