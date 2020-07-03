@@ -1,3 +1,4 @@
+// 全局返回处理
 const {
   HttpException
 } = require('../core/http-exception')
