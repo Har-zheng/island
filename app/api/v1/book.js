@@ -68,7 +68,6 @@ router.get('/:bookId/favor', new Auth().m, async ctx => {
 
 
 // 书籍的短评
-
 router.post('/add/short_commit', new Auth().m, async ctx => {
   const v = await new AddShortCommentValidator().validate(ctx, {
     id: 'book_id'
@@ -102,5 +101,8 @@ router.get('/hot_keyword', async ctx => {
     ]
   }
 })
+
+// exclude  忽略字段   在api 接口中使用这个方法比较好
+
 
 module.exports = router

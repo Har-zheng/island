@@ -1,5 +1,6 @@
-const Sequelize = require('sequelize')
-
+const {Sequelize, Model} = require('sequelize')
+const { clone, unset } = require('lodash')
+// Model 上不要定义构造函数
 
 const { 
   dbName,
@@ -26,6 +27,13 @@ const sequelize = new Sequelize(dbName, user, password, {
     freezeTableName: true
   }
 })
+Model.prototype.toJSON = function(){
+  let data = clone(this.dataValues)
+  unset(data, 'updated_at')
+  unset(data, 'created_at')
+  unset(data, 'deleted_at')
+  return data
+}
 sequelize.sync({
   // 删除数据 重新生成数据库
   force: false
