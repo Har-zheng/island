@@ -5,10 +5,10 @@ const axios = require('axios')
 const { sequelize } = require('@core/db.js')
 const { Favor } = require('./favor')
 class Book extends Model {
-  constructor(id){
-    super()
-    this.id = id
-  }
+  // constructor(id){
+  //   super()
+  //   this.id = id
+  // }
   static async detail(id){
     const url = util.format(config.yushu.detailUrl, id)
     const detail = await axios.get(url)
@@ -38,7 +38,7 @@ Book.init({
   },
   fav_nums: {
     type: Sequelize.INTEGER,
-    defaul: 0
+    defaultValue: 0
   }},
   {
     sequelize,

@@ -31,7 +31,7 @@ router.get('/hot_list', async (ctx, next) => {
     key: favors
   }
 })
-router.get('/:id/book', async (ctx, next) => {
+router.get('/:id/detail', async (ctx, next) => {
   const v = await new PositiveIntegerValidator().validate(ctx)
   const id = v.get('path.id')
   const detail = await Book.detail(v.get('path.id'))
@@ -67,25 +67,25 @@ router.get('/:bookId/favor', new Auth().m, async ctx => {
 })
 
 
-// 书籍的短评
-router.post('/add/short_commit', new Auth().m, async ctx => {
+// 添加书籍的短评
+router.post('/add/short_comment', new Auth().m, async ctx => {
   const v = await new AddShortCommentValidator().validate(ctx, {
-    id: 'book_id'
+    id: 'bookId'
   })
   const {
-    book_id,
+    bookId,
     content
   } = v.get('body')
-  await Comment.addCommit(book_id, content)
+  await Comment.addCommit(bookId, content)
   success()
 })
 
 // 获取书籍短评内容
-router.get('/:book_id/short_commit', new Auth().m, async ctx => {
+router.get('/:bookId/short_comment', new Auth().m, async ctx => {
   const v = await new PositiveIntegerValidator().validate(ctx, {
-    id: 'book_id'
+    id: 'bookId'
   })
-  const commit = await Comment.getCommit(v.get('path.book_id'))
+  const commit = await Comment.getCommit(v.get('path.bookId'))
   ctx.body = commit
 })
 

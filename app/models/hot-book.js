@@ -14,10 +14,7 @@ class HotBook extends Model {
     const books = await HotBook.findAll({
       order: ['index']
     })
-    const ids = []
-    books.forEach(book => {
-      ids.push(book.id)
-    });
+    const ids =   books.map(book => book.id);
     const favors = await Favor.findAll({
       where: {
         art_id: {
@@ -30,8 +27,8 @@ class HotBook extends Model {
     books.forEach(book => {
       HotBook._getEachBookStatus(book, favors)
     })
-    
-    return favors
+
+    return books
   }
   // 不能循环查询数据库  把查询的书籍放在数组中 通复杂查询Op.in  的方式查询数据
   static _getEachBookStatus(book, favors) {
@@ -41,7 +38,7 @@ class HotBook extends Model {
         count = favor.get('count')
       }
     })
-    book.setDataValue('count', count)
+    book.setDataValue('favNums', count)
     return book
   }
 
