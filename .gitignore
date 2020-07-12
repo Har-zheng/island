@@ -19,4 +19,9 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
+<<<<<<< HEAD
 /config/config.js
+=======
+
+/config/config.js
+>>>>>>> 198ec076c3542c59fe101fb5a00da36bbf3019b7
