@@ -1,3 +1,4 @@
+const { flatten } = require('lodash')
 const {
   Movie,
   Sentence,
@@ -75,13 +76,13 @@ class Art {
     const arts = []
     for (let key in artInfoObj) {
       let ids = artInfoObj[key]
-      if (!ids.length) {
+      if (ids.length === 0) {
         continue
       }
       key = parseInt(key)
       arts.push(await Art._getListByType(ids, key))
     }
-    return arts
+    return  flatten(arts)
   }
   static async _getListByType(ids, type) {
     let arts = null;
