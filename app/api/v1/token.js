@@ -27,7 +27,7 @@ const router = new Router({
 router.post('/', async ctx => {
   const v = await new TokenValidator().validate(ctx)
   // type
-  //   USER_MINI_PROGRAM:
+  // USER_MINI_PROGRAM:
   // USER_EMAIL:
   // USER_MOBILE:
   // ADMIN_EMAL:
