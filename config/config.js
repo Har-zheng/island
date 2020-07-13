@@ -6,7 +6,7 @@ module.exports = {
     host: 'localhost',
     port: 3306,
     user: 'root',
-    password: '12345678'
+    password: '@ZHZhongzhen123'
   },
   security: {
     secretKey: "abcdefg",
@@ -22,5 +22,5 @@ module.exports = {
     detailUrl: 'http://t.yushu.im/v2/book/id/%s',
     keywordUrl: 'http://t.yushu.im/v2/book/search?q=%s&count=%s&start=%s&summary=%s'
   },
-  host_url: 'http://localhost:3000/'
+  host_url: 'https://wx.hongzhen.top/'
 }
