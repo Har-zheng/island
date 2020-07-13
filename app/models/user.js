@@ -53,8 +53,7 @@ User.init({
   openid: {
     type: Sequelize.STRING(64),
     unique: true
-  },
-  test: Sequelize.STRING
+  }
 },{
   sequelize,
   tableName: 'user'

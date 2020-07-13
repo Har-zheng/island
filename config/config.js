@@ -6,7 +6,7 @@ module.exports = {
     host: 'localhost',
     port: 3306,
     user: 'root',
-    password: '@ZHZhongzhen123'
+    password: '12345678'
   },
   security: {
     secretKey: "abcdefg",
