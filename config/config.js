@@ -6,7 +6,7 @@ module.exports = {
     host: 'localhost',
     port: 3306,
     user: 'root',
-    password: '@ZHZhongzhen123'
+    password: '12345678'
   },
   security: {
     secretKey: "abcdefg",
@@ -15,7 +15,9 @@ module.exports = {
   wx: {
     appID: 'wxab28fe99a0747361',
     appSecret: '0ced3fc5b101e435d7b73f13b553b258',
-    loginUrl: 'https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code'
+    loginUrl: 'https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code',
+    accessTokenUrl: 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s',
+    msg_sec_check: 'https://api.weixin.qq.com/wxa/msg_sec_check?access_token=%s'
     // loginUrl: 'https://api.weixin.qq.com/sns/jscode2session?appid=APPID&secret=SECRET&js_code=JSCODE&grant_type=authorization_code'
   },
   yushu: {

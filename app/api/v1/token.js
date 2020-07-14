@@ -24,6 +24,7 @@ const {
 const router = new Router({
   prefix: '/v1/token'
 })
+
 router.post('/', async ctx => {
   const v = await new TokenValidator().validate(ctx)
   // type
@@ -48,13 +49,18 @@ router.post('/', async ctx => {
       throw new ParameterException('没有找到执行的函数')
       break;
   }
+  const wxInfo = await WXManger.accessToken()
+  ctx.session.wxInfo = wxInfo;
   ctx.body = {
-    token
+    token,
+    wxInfo
   }
 })
 router.post('/verify', async ctx => {
   const v = await new NotEmptyValidator().validate(ctx)
   const result = await Auth.verifyToken(v.get('body.token'))
+  const  wxInfo =  ctx.session.wxInfo
+
   ctx.body = {
     is_valid: result
   }

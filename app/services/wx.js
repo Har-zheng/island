@@ -33,6 +33,15 @@ class WXManger {
     }
     return generateToken(user.id, Auth.USER)
   }
+  static async accessToken() {
+    const url = util.format(global.config.wx.accessTokenUrl,
+      global.config.wx.appID,
+      global.config.wx.appSecret,
+    )
+    const result = await axios.get(url)
+    return result.data
+  }
+
 }
 module.exports = {
   WXManger

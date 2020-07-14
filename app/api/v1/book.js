@@ -25,6 +25,11 @@ const {
 const {
   success
 } = require('@lib/helper.js')
+const util = require('util')
+const axios = require('axios')
+const {
+  WXManger
+} = require('@services/wx')
 router.get('/hot_list', async (ctx, next) => {
   const favors = await HotBook.getAll()
   ctx.body = {
@@ -69,15 +74,37 @@ router.get('/:bookId/favor', new Auth().m, async ctx => {
 
 // 添加书籍的短评
 router.post('/add/short_comment', new Auth().m, async ctx => {
+
   const v = await new AddShortCommentValidator().validate(ctx, {
     id: 'bookId'
   })
+
   const {
     bookId,
     content
   } = v.get('body')
-  await Comment.addCommit(bookId, content)
-  success()
+
+  // 添加短评前  验证是否敏感词汇
+  const wxInfo = await WXManger.accessToken()
+  const access_token = wxInfo.access_token
+  const url =util.format(global.config.wx.msg_sec_check,
+    access_token
+  )
+  const result = await axios.post(url, {
+    content
+  })
+  console.log(result.data)
+  if(result.data.errcode === 0){
+    await Comment.addCommit(bookId, content)
+    success()
+  }else{
+    ctx.body = {
+      code: 200,
+      errcode: result.data.errcode,
+      errmsg :  result.data.errmsg
+    }
+    
+  }
 })
 
 // 获取书籍短评内容

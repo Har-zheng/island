@@ -1,10 +1,10 @@
 const Koa = require('koa')
 const path = require('path')
 const app = new Koa()
-const Router = require('koa-router')
 const Parser = require('koa-bodyparser')
 const parser = new Parser()
 const static = require('koa-static')
+
 require('module-alias/register')
 
 app.use(parser)
