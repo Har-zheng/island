@@ -11,6 +11,7 @@ class Book extends Model {
   // }
   static async detail(id){
     const url = util.format(config.yushu.detailUrl, id)
+    console.log(url)
     const detail = await axios.get(url)
     return detail.data
   }

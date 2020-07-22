@@ -22,7 +22,7 @@ module.exports = {
   },
   // http://t.yushu.im/v2/book/id/%s
   yushu: {
-    detailUrl: 'http://t.yushu.im/v1/book/id/%s',
+    detailUrl: 'http://t.yushu.im/v2/book/id/%s',
     keywordUrl: 'http://t.yushu.im/v1/book/search?q=%s&count=%s&start=%s&summary=%s'
   },
   host_url: 'https://wx.hongzhen.top/'
