@@ -20,9 +20,10 @@ module.exports = {
     msg_sec_check: 'https://api.weixin.qq.com/wxa/msg_sec_check?access_token=%s'
     // loginUrl: 'https://api.weixin.qq.com/sns/jscode2session?appid=APPID&secret=SECRET&js_code=JSCODE&grant_type=authorization_code'
   },
+  // http://t.yushu.im/v2/book/id/%s
   yushu: {
-    detailUrl: 'http://t.yushu.im/v2/book/id/%s',
-    keywordUrl: 'http://t.yushu.im/v2/book/search?q=%s&count=%s&start=%s&summary=%s'
+    detailUrl: 'http://t.yushu.im/v1/book/id/%s',
+    keywordUrl: 'http://t.yushu.im/v1/book/search?q=%s&count=%s&start=%s&summary=%s'
   },
   host_url: 'https://wx.hongzhen.top/'
 }
