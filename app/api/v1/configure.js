@@ -6,7 +6,7 @@ const router = new Router({
 // 音乐通过配置先隐藏
 router.get('/music', async ctx => {
   ctx.body = {
-    isShow : true
+    isShow : false
   }
 })
 module.exports = router
