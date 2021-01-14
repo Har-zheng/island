@@ -4,6 +4,8 @@ const app = new Koa()
 const Parser = require('koa-bodyparser')
 const parser = new Parser()
 const static = require('koa-static')
+var cors = require('koa2-cors');
+app.use(cors());
 
 require('module-alias/register')
 

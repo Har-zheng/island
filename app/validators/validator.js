@@ -157,6 +157,38 @@ class AddShortCommentValidator extends PositiveIntegerValidator {
     ]
   }
 }
+// cid 不能为空
+class CIdValidator extends LinValidator{
+  constructor(){
+    super()
+    this.cid = [
+      new Rule('isLength', '查看详情Cid不能为空', {
+        min: 1
+      })
+    ]
+  }
+}
+// email 
+class EmailValidator extends LinValidator{
+  constructor(){
+    super()
+    this.email = [
+      new Rule('isLength', '邮箱格式错误', {
+        min: 1
+      })
+    ]
+  }
+}
+class PasswordValidator extends LinValidator{
+  constructor(){
+    super()
+    this.cid = [
+      new Rule('isLength', '密码长度不对', {
+        min: 6
+      })
+    ]
+  }
+}
 
 module.exports = {
   PositiveIntegerValidator,
@@ -166,5 +198,8 @@ module.exports = {
   LikeValidator,
   ClassicValidator,
   SearchValidator,
-  AddShortCommentValidator
+  AddShortCommentValidator,
+  CIdValidator,
+  EmailValidator,
+  PasswordValidator
 }

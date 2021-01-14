@@ -11,7 +11,9 @@ const {
 const {
   PositiveIntegerValidator,
   SearchValidator,
-  AddShortCommentValidator
+  AddShortCommentValidator,
+  CIdValidator,
+  EmailValidator
 } = require('@validator')
 const {
   Auth
@@ -36,6 +38,53 @@ router.get('/hot_list', async (ctx, next) => {
     key: favors
   }
 })
+router.get('/columns', async (ctx, next) => {
+  const result = await axios.get('http://api.vikingship.xyz/api/columns')
+  console.log(result.data)
+  ctx.body = {
+    ...result.data
+  }
+})
+router.get('/columns/:cid', async (ctx, next) => {
+  // 封装后读取  url  地址参数的函数  方法
+  const v = await new CIdValidator().validate(ctx, {
+    id: 'cid'
+  })
+  console.log(v)
+  const cid = v.get('path.cid')
+  console.log(cid)
+  const result = await axios.get(`http://api.vikingship.xyz/api/columns/${cid}`)
+  console.log(result.data)
+  ctx.body = {
+    ...result.data
+  }
+})
+router.get('/columns/:cid/posts', async (ctx, next) => {
+  // 封装后读取  url  地址参数的函数  方法
+  const v = await new CIdValidator().validate(ctx, {
+    id: 'cid'
+  })
+  const cid = v.get('path.cid')
+  const result = await axios.get(`http://api.vikingship.xyz/api/columns/${cid}/posts`)
+  console.log(result.data)
+  ctx.body = {
+    ...result.data
+  }
+})
+//登录
+router.post('/user/login',async ctx => {
+  const v = await new EmailValidator().validate(ctx)
+  const {email , password} = v.get('body')
+  console.log(email , password)
+  const result = await axios.post('http://api.vikingship.xyz/api/user/login', {email , password})
+ console.log(result)
+  ctx.body = { 
+    ...result.data
+  }
+
+})
+
+
 router.get('/:id/detail', async (ctx, next) => {
   const v = await new PositiveIntegerValidator().validate(ctx)
   const id = v.get('path.id')
