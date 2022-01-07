@@ -3,11 +3,15 @@ const {
   Book
 } = require('@model/book.js')
 const router = Router({
-  prefix: '/v1/book'
+  prefix: '/v1/article'
 })
 const {
   HotBook
 } = require('@model/hot-book.js')
+const {
+  StockArticle
+} = require('@model/stock-article.js')
+
 const {
   PositiveIntegerValidator,
   SearchValidator,
@@ -38,6 +42,25 @@ router.get('/hot_list', async (ctx, next) => {
     key: favors
   }
 })
+
+// 添加文章
+router.post('/add/stockArticle', async ctx => {
+  const articleData = ctx.request.body
+  console.log(articleData);
+  await StockArticle.addArticle(articleData)
+  success()
+
+})
+
+// 查询文章列表
+router.get('/articleList', async ctx => {
+  const articleList = await StockArticle.getAll()
+  ctx.body = {
+    key: articleList
+  }
+})
+
+
 router.get('/columns', async (ctx, next) => {
   const result = await axios.get('http://api.vikingship.xyz/api/columns')
   console.log(result.data)

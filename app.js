@@ -1,15 +1,21 @@
 const Koa = require('koa')
 const path = require('path')
 const app = new Koa()
-const Parser = require('koa-bodyparser')
-const parser = new Parser()
+
+const koaBody = require('koa-body');
+// const Parser = require('koa-bodyparser')
+
 const static = require('koa-static')
 var cors = require('koa2-cors');
+
 app.use(cors());
 
 require('module-alias/register')
+app.use(koaBody())
 
-app.use(parser)
+
+
+
 
 
 const InitManager = require('./core/init')

@@ -86,8 +86,8 @@ class TokenValidator extends LinValidator {
     }
   }
 }
-class NotEmptyValidator extends LinValidator{
-  constructor(){
+class NotEmptyValidator extends LinValidator {
+  constructor() {
     super()
     this.token = [
       new Rule('isLength', 'token不能为空', {
@@ -98,31 +98,31 @@ class NotEmptyValidator extends LinValidator{
 }
 function checkArtType(vals) {
   let type = vals.body.type || vals.path.type
-  if(!type){
+  if (!type) {
     throw new Error('type是必传字段')
   }
   type = parseInt(type)
-  if(!ArtType.isThisType(type)){
+  if (!ArtType.isThisType(type)) {
     throw new Error('type参数不合法')
   }
 }
 
-class CheckedType{
-  
+class CheckedType {
+
 }
 
-class LikeValidator extends PositiveIntegerValidator{
-  constructor(){
+class LikeValidator extends PositiveIntegerValidator {
+  constructor() {
     super()
     this.validateType = checkArtType
   }
 }
-class ClassicValidator extends LikeValidator{
+class ClassicValidator extends LikeValidator {
 
 }
 
 class SearchValidator extends LinValidator {
-  constructor(){
+  constructor() {
     super()
     this.q = [
       new Rule('isLength', '搜索关键词不能为空', {
@@ -147,7 +147,18 @@ class SearchValidator extends LinValidator {
   }
 }
 class AddShortCommentValidator extends PositiveIntegerValidator {
-  constructor(){
+  constructor() {
+    super()
+    this.content = [
+      new Rule('isLength', '短评长度为0-12字符', {
+        min: 0,
+        max: 12
+      })
+    ]
+  }
+}
+class AddtockArticleValidator extends PositiveIntegerValidator {
+  constructor() {
     super()
     this.content = [
       new Rule('isLength', '短评长度为0-12字符', {
@@ -158,8 +169,8 @@ class AddShortCommentValidator extends PositiveIntegerValidator {
   }
 }
 // cid 不能为空
-class CIdValidator extends LinValidator{
-  constructor(){
+class CIdValidator extends LinValidator {
+  constructor() {
     super()
     this.cid = [
       new Rule('isLength', '查看详情Cid不能为空', {
@@ -169,8 +180,8 @@ class CIdValidator extends LinValidator{
   }
 }
 // email 
-class EmailValidator extends LinValidator{
-  constructor(){
+class EmailValidator extends LinValidator {
+  constructor() {
     super()
     this.email = [
       new Rule('isLength', '邮箱格式错误', {
@@ -179,8 +190,8 @@ class EmailValidator extends LinValidator{
     ]
   }
 }
-class PasswordValidator extends LinValidator{
-  constructor(){
+class PasswordValidator extends LinValidator {
+  constructor() {
     super()
     this.cid = [
       new Rule('isLength', '密码长度不对', {

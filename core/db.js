@@ -31,7 +31,7 @@ const sequelize = new Sequelize(dbName, user, password, {
     scopes: {
       bh: {
         attributes: {
-          exclude: ['updatedAt', 'deletedAt', 'createdAt',  'updated_at', 'created_at', 'deleted_at']
+          exclude: ['updatedAt', 'deletedAt', 'createdAt', 'updated_at', 'created_at', 'deleted_at']
         }
       }
     },
@@ -49,9 +49,9 @@ Model.prototype.toJSON = function () {
   unset(data, 'updatedAt')
   unset(data, 'deletedAt')
   unset(data, 'createdAt')
-  for(key in data){
-    if(key === 'image'){
-      if(!data[key].startsWith('http'))
+  for (key in data) {
+    if (key === 'image') {
+      if (data[key] && !data[key].startsWith('http'))
         data[key] = host_url + data[key]
     }
   }
