@@ -12,12 +12,12 @@ app.use(cors());
 
 require('module-alias/register')
 app.use(koaBody())
-
-
-
-
-
-
+app.use(async (ctx, next)=> {
+  ctx.set('Access-Control-Allow-Origin', '*');
+  ctx.set('Access-Control-Allow-Headers', 'Content-Type');
+  ctx.set('Access-Control-Allow-Methods', 'POST');
+  await next();
+});
 const InitManager = require('./core/init')
 const catchError = require('./middlewares/exception')
 require('./app/models/user')
