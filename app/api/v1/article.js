@@ -11,6 +11,9 @@ const {
 const {
   StockArticle
 } = require('@model/stock-article.js')
+const {
+  User
+} = require('@model/user.js')
 
 const {
   PositiveIntegerValidator,
@@ -19,9 +22,7 @@ const {
   CIdValidator,
   EmailValidator
 } = require('@validator')
-const {
-  Auth
-} = require('@middlewares/auth.js')
+const { Auth } = require('@middlewares/auth.js')
 const {
   Favor
 } = require('@model/favor.js')
@@ -49,14 +50,46 @@ router.post('/add/stockArticle', async ctx => {
   console.log(articleData);
   await StockArticle.addArticle(articleData)
   success()
-
 })
-
 // 查询文章列表
 router.get('/articleList', async ctx => {
   const articleList = await StockArticle.getAll()
   ctx.body = {
-    key: articleList
+    list: articleList
+  }
+})
+//保存用户信息
+router.post('/saveWxInfo', async (ctx, next) => {
+  const wxInfo = ctx.request.body
+  console.log(wxInfo);
+  let wx = await User.saveWxInfo(wxInfo)
+
+  ctx.body = {
+    ...wx.dataValues
+  }
+})
+//保存手机号
+router.post('/saveWxPhone', async (ctx, next) => {
+  const {  phone, id } = ctx.request.body
+  console.log(phone, id);
+  await User.saveWxPhone( phone, id )
+  success()
+})
+// 解密用户手机号
+//https://api.weixin.qq.com/wxa/business/getuserphonenumber?access_token=ACCESS_TOKEN
+ router.post('/getuserphonenumber', async ctx => {
+   const {access_token, code } = ctx.request.body
+  const result = await axios.post(`https://api.weixin.qq.com/wxa/business/getuserphonenumber?access_token=${access_token}`, { code })
+  ctx.body = {
+    ...result
+  }
+})
+// 获取用户列表
+router.get('/wxUserList', async (ctx, next) => {
+  const wxUserList = await User.wxUserList()
+  ctx.body = {
+    code:20000,
+    list: wxUserList
   }
 })
 
@@ -104,8 +137,8 @@ router.post('/user/login', async ctx => {
   ctx.body = {
     ...result.data
   }
-
 })
+
 
 
 router.get('/:id/detail', async (ctx, next) => {

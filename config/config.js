@@ -6,15 +6,15 @@ module.exports = {
     host: 'localhost',
     port: 3306,
     user: 'root',
-    password: 'hongzhen123'
+    password: '123456'
   },
   security: {
     secretKey: "abcdefg",
     expiresIn: 60 * 60 * 24 * 30
   },
   wx: {
-    appID: 'wxab28fe99a0747361',
-    appSecret: '0ced3fc5b101e435d7b73f13b553b258',
+    appID: 'wxf8546d0bdc57684e',
+    appSecret: 'bcd63d5c0767f535540f365c3bfc5d3b',
     loginUrl: 'https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code',
     accessTokenUrl: 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s',
     msg_sec_check: 'https://api.weixin.qq.com/wxa/msg_sec_check?access_token=%s'

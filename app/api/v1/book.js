@@ -76,12 +76,19 @@ router.post('/user/login', async ctx => {
   const v = await new EmailValidator().validate(ctx)
   const { email, password } = v.get('body')
   console.log(email, password)
-  const result = await axios.post('http://api.vikingship.xyz/api/user/login', { email, password })
-  console.log(result)
   ctx.body = {
-    ...result.data
+    code: 20000,
+    data: email
   }
 
+})
+//info
+router.get('/user/info', async ctx => {
+
+  ctx.body = {
+    code: 20000,
+    data: '登录成功!'
+  }
 })
 
 
