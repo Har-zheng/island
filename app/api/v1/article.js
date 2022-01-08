@@ -80,9 +80,9 @@ router.post('/saveWxPhone', async (ctx, next) => {
  router.post('/getuserphonenumber', async ctx => {
    const {access_token, code } = ctx.request.body
   const result = await axios.post(`https://api.weixin.qq.com/wxa/business/getuserphonenumber?access_token=${access_token}`, { code })
-  console.log(result);
+  console.log(result.data);
   ctx.body = {
-    result
+    ...result.data
   }
 })
 // 获取用户列表
