@@ -14,6 +14,7 @@ const {
 const {
   User
 } = require('@model/user.js')
+const multer = require('koa-multer');
 
 const {
   PositiveIntegerValidator,
@@ -93,6 +94,29 @@ router.get('/wxUserList', async (ctx, next) => {
     list: wxUserList
   }
 })
+
+// 保存图片
+
+//配置    
+var storage = multer.diskStorage({
+  //文件保存路径
+  destination: function (req, file, cb) {
+      cb(null, 'static/images/')  //注意路径必须存在
+  },
+  //修改文件名称
+  filename: function (req, file, cb) {
+      var fileFormat = (file.originalname).split(".");
+      cb(null,'headImg' + "." + fileFormat[fileFormat.length - 1]);
+  }
+})
+//加载配置
+var upload = multer({ storage: storage })
+router.post('/addImg', upload.single('headImg'), async (ctx, next) => {
+  ctx.body = {
+      filename: ctx.req.file.filename,//返回文件名
+      body:ctx.req.body
+  }
+});
 
 
 router.get('/columns', async (ctx, next) => {
@@ -176,6 +200,7 @@ router.get('/:bookId/favor', new Auth().m, async ctx => {
   const favor = await Favor.getBookFavor(v.get('path.bookId'), ctx.auth.uid)
   ctx.body = favor
 })
+
 
 
 // 添加书籍的短评
