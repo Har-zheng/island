@@ -22,4 +22,10 @@ router.post('/register', async (ctx) => {
   // 保存到数据库
   // sql model
 })
+router.post('/logout', async ctx => {
+  ctx.body = {
+    code: 20000,
+    data: '登录成功!'
+  }
+})
 module.exports = router

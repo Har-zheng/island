@@ -56,8 +56,7 @@ User.init({
     autoIncrement: true
   },
   phone: {
-    type: Sequelize.STRING(128),
-    unique: true
+    type: Sequelize.STRING(128)
   },
   avatarUrl: {
     type: Sequelize.STRING
