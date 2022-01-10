@@ -41,7 +41,7 @@ StockArticle.init({
   image: Sequelize.STRING,
   author: Sequelize.STRING, //作者
   title: Sequelize.STRING, // 标题
-  article: Sequelize.STRING(2000),
+  article: Sequelize.STRING(5000),
   createTime:{
     type: Sequelize.STRING(128),
     unique: false
@@ -53,6 +53,8 @@ StockArticle.init({
     tableName: 'stock_article'
   }
 )
+
+StockArticle.sync({ alter: true })
 module.exports = {
   StockArticle
 }
