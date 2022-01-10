@@ -2,6 +2,7 @@
 node_modules
 /dist
 /config/config
+/static/uploads/
 
 # local env files
 .env.local
