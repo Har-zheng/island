@@ -50,10 +50,13 @@ router.post('/', async ctx => {
       break;
   }
   const wxInfo = await WXManger.accessToken()
-  ctx.session.wxInfo = wxInfo;
+  if(!wxInfo)var wxInfoAs =  await WXManger.accessToken()
+  console.log( 'wxInfo',wxInfo);
+  ctx.session.wxInfo = wxInfo || wxInfoAs;
+  console.log(wxInfo);
   ctx.body = {
     token,
-    wxInfo
+    wxInfo:wxInfo|| wxInfoAs
   }
 })
 router.post('/verify', async ctx => {
