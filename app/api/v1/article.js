@@ -71,15 +71,15 @@ router.post('/saveWxInfo', async (ctx, next) => {
 })
 //保存手机号
 router.post('/saveWxPhone', async (ctx, next) => {
-  const {  phone, id } = ctx.request.body
+  const { phone, id } = ctx.request.body
   console.log(phone, id);
-  await User.saveWxPhone( phone, id )
+  await User.saveWxPhone(phone, id)
   success()
 })
 // 解密用户手机号
 //https://api.weixin.qq.com/wxa/business/getuserphonenumber?access_token=ACCESS_TOKEN
- router.post('/getuserphonenumber', async ctx => {
-   const {access_token, code } = ctx.request.body
+router.post('/getuserphonenumber', async ctx => {
+  const { access_token, code } = ctx.request.body
   const result = await axios.post(`https://api.weixin.qq.com/wxa/business/getuserphonenumber?access_token=${access_token}`, { code })
   console.log(result.data);
   ctx.body = {
@@ -90,7 +90,7 @@ router.post('/saveWxPhone', async (ctx, next) => {
 router.get('/wxUserList', async (ctx, next) => {
   const wxUserList = await User.wxUserList()
   ctx.body = {
-    code:20000,
+    code: 20000,
     list: wxUserList
   }
 })
@@ -101,21 +101,33 @@ router.get('/wxUserList', async (ctx, next) => {
 var storage = multer.diskStorage({
   //文件保存路径
   destination: function (req, file, cb) {
-      cb(null, 'static/images/')  //注意路径必须存在
+    cb(null, 'static/images/')  //注意路径必须存在
   },
   //修改文件名称
   filename: function (req, file, cb) {
-      var fileFormat = (file.originalname).split(".");
-      cb(null,'headImg' + "." + fileFormat[fileFormat.length - 1]);
+    var fileFormat = (file.originalname).split(".");
+    cb(null, 'headImg' + "." + fileFormat[fileFormat.length - 1]);
   }
 })
-//加载配置
+//上传图片
 var upload = multer({ storage: storage })
 router.post('/addImg', upload.single('headImg'), async (ctx, next) => {
   ctx.body = {
-      filename: ctx.req.file.filename,//返回文件名
-      body:ctx.req.body
+    filename: ctx.req.file.filename,//返回文件名
+    body: ctx.req.body
   }
+});
+// 删除文章
+router.post('/articleDestroy', upload.single('headImg'), async (ctx, next) => {
+  const { id } = ctx.request.body
+  console.log(id);
+  await User.articleDestroy(id)
+  success()
+
+});
+// test 审核小程序
+router.get('/isShow',  async (ctx, next) => {
+  ctx.body = { isShow: true}
 });
 
 
@@ -163,8 +175,6 @@ router.post('/user/login', async ctx => {
     ...result.data
   }
 })
-
-
 
 router.get('/:id/detail', async (ctx, next) => {
   const v = await new PositiveIntegerValidator().validate(ctx)
