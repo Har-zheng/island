@@ -56,6 +56,7 @@ router.post('/add/stockArticle', async ctx => {
 router.get('/articleList', async ctx => {
   const articleList = await StockArticle.getAll()
   ctx.body = {
+    code: 20000,
     list: articleList
   }
 })
@@ -121,7 +122,7 @@ router.post('/addImg', upload.single('headImg'), async (ctx, next) => {
 router.post('/articleDestroy', upload.single('headImg'), async (ctx, next) => {
   const { id } = ctx.request.body
   console.log(id);
-  await User.articleDestroy(id)
+  await StockArticle.articleDestroy(id)
   success()
 
 });

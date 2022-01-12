@@ -22,6 +22,16 @@ class StockArticle extends Model {
     })
     return article
   }
+  // 删除文章
+  static async articleDestroy(id) {
+    const delArticle =  await StockArticle.destroy({
+        where: {
+          id
+        }
+      })
+    return delArticle
+  }
+
 
   // 不能循环查询数据库  把查询的书籍放在数组中 通复杂查询Op.in  的方式查询数据
   static _getEachBookStatus(book, favors) {
