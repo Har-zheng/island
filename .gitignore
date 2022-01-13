@@ -3,6 +3,7 @@ node_modules
 /dist
 /config/config
 /static/uploads/
+/app/services/AccseeToken.json
 
 # local env files
 .env.local
