@@ -32,17 +32,20 @@ router.post('/', async ctx => {
   // USER_EMAIL:
   // USER_MOBILE:
   // ADMIN_EMAL:
-  let token;
+  let token, userId, session_key;
   switch (v.get('body.type')) {
     case LoginType.USER_MINI_PROGRAM:
-      token = await WXManger.codeToToken(v.get('body.account'))
+      let userInfo = await WXManger.codeToToken(v.get('body.account'))
+      token= userInfo.token
+      userId= userInfo.userId
+      session_key= userInfo.session_key
       break;
     case LoginType.USER_EMAIL:
       // secret
       token = await emaiLogin(v.get('body.account'), v.get('body.secret'), Auth.USER)
       break;
-      // case LoginType.USER_MOBILE:
-      //   break;
+    // case LoginType.USER_MOBILE:
+    //   break;
     case LoginType.ADMIN_EMAIL:
       break;
     default:
@@ -50,19 +53,18 @@ router.post('/', async ctx => {
       break;
   }
   const wxInfo = await WXManger.accessToken()
-  if(!wxInfo)var wxInfoAs =  await WXManger.accessToken()
-  console.log( 'wxInfo',wxInfo);
+  if (!wxInfo) var wxInfoAs = await WXManger.accessToken()
   ctx.session.wxInfo = wxInfo || wxInfoAs;
-  console.log(wxInfo);
   ctx.body = {
     token,
-    wxInfo:wxInfo|| wxInfoAs
+    userId,
+    wxInfo:  Object.assign((wxInfo || wxInfoAs), {session_key})
   }
 })
 router.post('/verify', async ctx => {
   const v = await new NotEmptyValidator().validate(ctx)
   const result = await Auth.verifyToken(v.get('body.token'))
-  const  wxInfo =  ctx.session.wxInfo
+  const wxInfo = ctx.session.wxInfo
 
   ctx.body = {
     is_valid: result

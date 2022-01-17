@@ -31,7 +31,12 @@ class User extends Model {
   }
   // 保存用户信息
   static async saveWxInfo(wxInfo) {
-
+    const { userId } = wxInfo
+    if (userId) {
+      const user = await User.update({ ...wxInfo },
+        { 'where': { 'id': userId } })
+      return await User.findOne({ 'where': { 'id': userId } })
+    }
     return await User.create({ ...wxInfo })
   }
   //绑定用户手机号
@@ -47,6 +52,19 @@ class User extends Model {
       order: ['id']
     })
     return wxInfoList
+  }
+  // 查用户
+  static async getUser(id) {
+    const user = await User.findOne({
+      order: ['id']
+    })
+    return user
+  }
+  // 设置vip user
+  static async setVip(id) {
+    const user = await User.update({ vipUser: true },
+      { 'where': { 'id': id } })
+    return user
   }
 }
 User.init({
@@ -66,7 +84,9 @@ User.init({
     type: Sequelize.STRING(128),
     unique: true
   },
-
+  vipUser: { // 1普通用户  2 vip用户
+    type: Sequelize.INTEGER
+  },
   password: {
     type: Sequelize.STRING,
     set(val) {
@@ -83,6 +103,6 @@ User.init({
   sequelize,
   tableName: 'user'
 })
-
+// User.sync({ alter: true })
 module.exports = { User }
 // 数据迁移  sql 更新 风险

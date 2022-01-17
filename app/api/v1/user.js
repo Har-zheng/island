@@ -1,7 +1,7 @@
 const Router = require('koa-router')
 const { RegisteerValidator } = require('@validator')
 const { User } = require('@model/user')
-const {success} = require('@lib/helper')
+const { success } = require('@lib/helper')
 const router = new Router({
   prefix: '/v1/user'
 })
@@ -22,6 +22,24 @@ router.post('/register', async (ctx) => {
   // 保存到数据库
   // sql model
 })
+
+// 设置vip user
+router.post('/setVip', async (ctx, next) => {
+  const { id } = ctx.request.body
+  await User.setVip(id)
+  success()
+});
+
+//查用户 
+router.post('/getUser', async (ctx, next) => {
+  const { id } = ctx.request.body
+  const user = await User.getUser(id)
+  ctx.body = {
+    code: 20000,
+    wxInfo: user
+  }
+});
+
 router.post('/logout', async ctx => {
   ctx.body = {
     code: 20000,

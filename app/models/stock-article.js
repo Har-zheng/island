@@ -33,6 +33,7 @@ class StockArticle extends Model {
   }
 
 
+
   // 不能循环查询数据库  把查询的书籍放在数组中 通复杂查询Op.in  的方式查询数据
   static _getEachBookStatus(book, favors) {
     let count = 0
@@ -52,6 +53,7 @@ StockArticle.init({
   author: Sequelize.STRING, //作者
   title: Sequelize.STRING, // 标题
   article: Sequelize.STRING(6000),
+  vipArticle: Sequelize.STRING(6000),
   createTime:{
     type: Sequelize.STRING(128),
     unique: false
@@ -59,7 +61,7 @@ StockArticle.init({
 },
   {
     sequelize,
-    timestamps: true,
+    timestamps: false,
     tableName: 'stock_article'
   }
 )
