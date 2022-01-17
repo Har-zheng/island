@@ -103,6 +103,6 @@ User.init({
   sequelize,
   tableName: 'user'
 })
-// User.sync({ alter: true })
+User.sync({ alter: true })
 module.exports = { User }
 // 数据迁移  sql 更新 风险
