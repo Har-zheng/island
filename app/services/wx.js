@@ -43,8 +43,10 @@ class WXManger {
       global.config.wx.appID,
       global.config.wx.appSecret,
     )
-    const {data: { access_token }} = await axios.get(url)
-    console.log(data);
+    const res = await axios.get(url)
+    console.log(res);
+    
+    const {data: { access_token }} =res
     if (access_token) {//如果成功获取则写入文件
       fs.writeFileSync(fileName, JSON.stringify({//写文件，JSON.stringify将对象转成字符串
         access_token,//写入当前获取到的accesstoken
