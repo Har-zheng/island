@@ -19,9 +19,13 @@ class User extends Model {
     return user
   }
   static async getUserByOpenid(openid) {
-    const user = User.findOne({
-      openid
+    console.log('openid'+openid);
+    const user = await User.findOne({
+      where: {
+        openid
+      }
     })
+    console.log(user);
     return user
   }
   static async registerByOpenid(openid) {
@@ -41,7 +45,6 @@ class User extends Model {
   }
   //绑定用户手机号
   static async saveWxPhone(phone, id) {
-    console.log(typeof phone);
     const phoneSave = await User.update({ phone: phone },
       { 'where': { 'id': id } })
     return phoneSave

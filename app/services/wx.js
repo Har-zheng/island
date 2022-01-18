@@ -26,6 +26,7 @@ class WXManger {
     )
     const result = await axios.get(url)
     const { data: {session_key, openid}, status, errcode  } =result
+    console.log(openid);
     if (status !== 200) {
       throw new AuthFailed('openid获取失败')
     }
@@ -33,6 +34,7 @@ class WXManger {
       throw new AuthFailed('openid获取失败' + errcode)
     }
     let user = await User.getUserByOpenid(openid)
+    console.log(user);
     if (!user) {
       user = await User.registerByOpenid(openid)
     }
