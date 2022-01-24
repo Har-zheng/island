@@ -25,8 +25,8 @@ router.post('/register', async (ctx) => {
 
 // 设置vip user
 router.post('/setVip', async (ctx, next) => {
-  const { id } = ctx.request.body
-  await User.setVip(id)
+  const { id, isVip } = ctx.request.body
+  await User.setVip(id, isVip)
   success()
 });
 

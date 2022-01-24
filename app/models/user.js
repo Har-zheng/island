@@ -19,7 +19,7 @@ class User extends Model {
     return user
   }
   static async getUserByOpenid(openid) {
-    console.log('openid'+openid);
+    console.log('openid' + openid);
     const user = await User.findOne({
       where: {
         openid
@@ -63,9 +63,9 @@ class User extends Model {
     })
     return user
   }
-  // 设置vip user
-  static async setVip(id) {
-    const user = await User.update({ vipUser: true },
+  // 设置vip user 或者取消
+  static async setVip(id, isVip = true) {
+    const user = await User.update({ vipUser: isVip },
       { 'where': { 'id': id } })
     return user
   }
