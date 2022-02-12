@@ -58,9 +58,7 @@ class User extends Model {
   }
   // 查用户
   static async getUser(id) {
-    const user = await User.findOne({
-      order: ['id']
-    })
+    const user = await User.findOne({ 'where': { 'id': id } })
     return user
   }
   // 设置vip user 或者取消
@@ -109,3 +107,14 @@ User.init({
 User.sync({ alter: true })
 module.exports = { User }
 // 数据迁移  sql 更新 风险
+
+
+// FROM registry.cn-shanghai.aliyuncs.com/fengzhihao/nginx:1.15.12
+// FROM registry.cn-hangzhou.aliyuncs.com/monsoul/nginx:vue
+
+// LABEL version="1.0"
+// LABEL maintainer="qichaosong@hcdlearning.com"
+// LABEL maintainer="monsoul@msn.com"
+
+// COPY dist/  /usr/html/
+// COPY dist/  /usr/share/nginx/html
